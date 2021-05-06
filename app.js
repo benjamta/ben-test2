@@ -13,7 +13,7 @@ const app = express();
 
 // Configuration
 const PORT = 80;
-const HOST = "ben-test2.azurewebsites.net";
+const HOST = "localhost";
 const API_SERVICE_URL = "https://app.rainbird.ai/";
 
 // Logging
