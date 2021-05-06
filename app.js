@@ -1,3 +1,9 @@
+/*
+And example link - not the addition of the 'key' URL parameter:
+
+http://localhost:3000/evidence?id=WA:RF:2f20be82f0b3dd14db0b26818a16a9fcb5b2d3e5e2440c142f913f7ab25c844f&api=https://api.rainbird.ai&engine=Core&sid=6eebe195-d72d-44e5-8ee4-8d84de696f2d&key=41aec83e-4cc2-9ad5-19dc-261997a461c0
+*/
+
 const express = require('express');
 const morgan = require("morgan");
 const { createProxyMiddleware } = require('http-proxy-middleware');
@@ -6,15 +12,9 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 
 // Configuration
-const PORT = 3000;
-const HOST = "localhost";
+const PORT = 80;
+const HOST = "ben-test2.azurewebsites.net";
 const API_SERVICE_URL = "https://app.rainbird.ai/";
-/*
-http://localhost:3000/evidence?id=WA:RF:2f20be82f0b3dd14db0b26818a16a9fcb5b2d3e5e2440c142f913f7ab25c844f&api=https://api.rainbird.ai&engine=Core&sid=6eebe195-d72d-44e5-8ee4-8d84de696f2d&key=41aec83e-4cc2-9ad5-19dc-261997a461c0
-
-
-http://localhost:3000//evidence?id=WA:RF:880ebd4fe55259c6d0ebc27f2d081642f899c7ccbc301342718bdbb2c89055d9&api=https://api.rainbird.ai&engine=Core&sid=3360b098-5854-4f9c-9cdf-d7bbd2c875fe&key=991215ee-6f99-4b29-9f87-901e76b60cde
-*/
 
 // Logging
 app.use(morgan('dev'));
