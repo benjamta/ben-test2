@@ -12,7 +12,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 
 // Configuration
-const PORT = 80;
+const PORT = 3000;
 const HOST = "localhost";
 const API_SERVICE_URL = "https://app.rainbird.ai/";
 
