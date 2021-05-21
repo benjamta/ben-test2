@@ -5,7 +5,7 @@ http://localhost:3000/evidence?id=WA:RF:2f20be82f0b3dd14db0b26818a16a9fcb5b2d3e5
 */
 
 const express = require('express');
-const morgan = require("morgan");
+const morgan = require('morgan');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 // Create Express Server
@@ -13,28 +13,39 @@ const app = express();
 
 // Configuration
 const PORT = 3000;
-const HOST = "localhost";
-const API_SERVICE_URL = "https://app.rainbird.ai/";
+const HOST = 'localhost';
+const API_SERVICE_URL = 'https://enterprise.rainbird.ai/';
 
 // Logging
 app.use(morgan('dev'));
 
- // Proxy endpoint
-app.use('/', createProxyMiddleware({
+// Proxy endpoint
+app.use(
+  '/',
+  createProxyMiddleware({
     target: API_SERVICE_URL,
     changeOrigin: true,
-    pathRewrite: function (path, req) { 
-        return path.replace('&key=', '');
+    pathRewrite: function (path, req) {
+      return path.replace('&key=', '');
     },
 
     onProxyReq: function (proxyReq, req, res) {
-        if(req.query.key) {
-            proxyReq.setHeader('x-evidence-key', req.query.key);
-        }
-      },
- }));
+      if (req.query.key) {
+        const body = `key=${req.query.key}`;
 
- // Start the Proxy
+        proxyReq.method = 'POST';
+
+        proxyReq.setHeader('content-type', 'application/x-www-form-urlencoded');
+        proxyReq.setHeader('content-length', body.length);
+
+        proxyReq.write(body);
+        proxyReq.end();
+      }
+    },
+  })
+);
+
+// Start the Proxy
 app.listen(PORT, HOST, () => {
-    console.log(`Starting Proxy at ${HOST}:${PORT}`);
- });
+  console.log(`Starting Proxy at ${HOST}:${PORT}`);
+});
